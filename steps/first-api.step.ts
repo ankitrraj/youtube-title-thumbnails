@@ -18,11 +18,23 @@ export const handler =async (req:any ,{emit ,logger,state}:any )=>{
         logger.info('recived submission request', {body:req.body} ) 
         const {channel ,email } = req.body as submitrequest;
 
+        if(!channel || !email){
+            return{
+                status:400,
+                body:{
+                error : "missing required fields"
+            },
+            };
+        }
+
     } catch (error:any) {
         logger.error('error in submissions{error:error.message}')
         return{
             status:500,
-            error : "internal server error"
+            body:{
+                error : "internal server error"
+            }
+            
         }
 
     }
